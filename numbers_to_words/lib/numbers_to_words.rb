@@ -1,6 +1,7 @@
 class String
   def numbers_to_words
     first_digit = {
+      "0" => "",
       "1" => "one",
       "2" => "two",
       "3" => "three",
@@ -12,7 +13,8 @@ class String
       "9" => "nine"
     }
 
-    tens = {
+    teens = {
+      "0"  => "ten",
       "1" => "eleven",
       "2" => "twelve",
       "3" => "thirteen",
@@ -25,10 +27,10 @@ class String
     }
 
     second_digit = {
-      "0"  => "ten",
+      "0"  => "",
       "2"  => "twenty",
       "3"  => "thirty",
-      "4"  => "fourty",
+      "4"  => "forty",
       "5"  => "fifty",
       "6"  => "sixty",
       "7"  => "seventy",
@@ -37,7 +39,7 @@ class String
     }
 
     input_array = self.reverse.scan(/.{1,3}/)
-    number_word = ""
+    number_word = []
 
     input_array.each_with_index do |number_group, group_index|
 
@@ -57,20 +59,28 @@ class String
         number_place = "trillion"
       end
 
-      number_word.prepend(" #{number_place} ")
+      number_word.unshift(number_place)
 
-      char_trio.each_with_index do |number, number_index|
-        if number_index == 0
-          number_word.prepend(first_digit.fetch(number))
-        elsif number_index == 2
-          number_word.prepend("#{first_digit.fetch(number)} hundred ")
-        elsif number_index == 1
-          number_word.prepend("#{second_digit.fetch(number)} ")
+      i = 0
+
+      char_trio.each do |number|
+        if i == 0
+          if char_trio.at(1) == "1"
+            number_word.unshift("#{teens.fetch(number)}")
+            char_trio.pop(1)
+            i = 1
+          else
+            number_word.unshift("#{first_digit.fetch(number)}")
+          end
+        elsif i == 2
+          number_word.unshift("#{first_digit.fetch(number)} hundred")
+        elsif i == 1
+          number_word.unshift("#{second_digit.fetch(number)}")
         end
+        i += 1
       end
     end
-    number_word.slice!((number_word.length - 2)..number_word.length)
-    number_word
+    number_word.reject!(&:empty?).join(" ")
   end
 end
 
