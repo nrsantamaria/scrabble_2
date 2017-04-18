@@ -3,18 +3,18 @@ class String
     input_array = self.upcase.split("")
     total = 0
     letters = {
-      ["A","E","I","O","U","L","N","R","S","T"] => 1,
-      ["D","G"] => 2,
-      ["B","C","M","P"] => 3,
-      ["F","H","V","W","Y"] => 4,
-      ["K"] => 5,
-      ["J","X"] => 8,
-      ["Q","Z"] => 10,
+      /[AEIOULNRST]/ => 1,
+      /[DG]/ => 2,
+      /[BCMP]/ => 3,
+      /[FHVWY]/ => 4,
+      /[K]/ => 5,
+      /[JX]/ => 8,
+      /[QZ]/ => 10,
     }
 
     letters.each do |key, value|
       input_array.each do |letter|
-        if key.include?(letter)
+        if key === letter
           total += value
         end
       end
