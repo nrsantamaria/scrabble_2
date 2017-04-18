@@ -1,6 +1,12 @@
 class String
+  def split_array
+    self.upcase.split("")
+  end
+
+
   define_method(:scrabble) do
-    input_array = self.upcase.split("")
+
+    input_array = self.split_array
     total = 0
     letters = {
       /[AEIOULNRST]/ => 1,
