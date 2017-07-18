@@ -1,4 +1,4 @@
-# _leetspeak_
+# _Scrabble 2_
 
 #### By _**Nicole Santamaria** and **Niklas Long**_
 
